@@ -1,0 +1,101 @@
+syntax = 'proto3';
+
+package beget.api.helpdesk.ticket;
+import "google/api/annotations.proto";
+import "helpdesk/proto/v1/structure.proto";
+
+// TicketService
+service TicketService {
+    rpc createTicket (CreateTicketRequest) returns (CreateTicketResponse) {
+        option (google.api.http) = {
+            post: '/ticket/{id}'
+        };
+    }
+    rpc getTicket (GetTicketRequest) returns (GetTicketResponse) {
+        option (google.api.http) = {
+            get: '/ticket/{id}'
+        };
+    }
+    rpc removeTicket (RemoveTicketRequest) returns (RemoveTicketResponse) {
+        option (google.api.http) = {
+            delete: '/ticket/{id}'
+        };
+    }
+    rpc createPost (CreatePostRequest) returns (CreatePostResponse) {
+        option (google.api.http) = {
+            post: '/ticket/{id}/post/'
+        };
+    }
+    rpc getCustomerTickets (CustomerTicketsRequest) returns (CustomerTicketsResponse) {
+        option (google.api.http) = {
+            get: '/ticket/customer/'
+        };
+    }
+    rpc getAttachment (GetAttachmentRequest) returns (GetAttachmentResponse) {
+        option (google.api.http) = {
+            get: '/ticket/{id}/attachment'
+        };
+    }
+    rpc removeAttachment (RemoveAttachmentRequest) returns (RemoveAttachmentResponse) {
+        option (google.api.http) = {
+            delete: '/ticket/{id}/attachment'
+        };
+    }
+}
+
+message RemoveAttachmentRequest {
+    Post post = 1;
+}
+
+message RemoveAttachmentResponse {
+    bool remove = 1;
+}
+
+message GetAttachmentRequest {
+    Post post = 1;
+}
+
+message GetAttachmentResponse {
+    repeated Attachment attachment = 1;
+}
+
+message CreatePostRequest {
+    int32 id = 1;
+    Post body = 2;
+}
+
+message GetTicketRequest {
+    int32 id = 1;
+}
+
+message RemoveTicketRequest {
+    Ticket ticket = 1;
+}
+
+message RemoveTicketResponse {
+    Ticket ticket = 1;
+}
+
+message CustomerTicketsRequest {
+    int32 customer_id = 1;
+}
+
+message CustomerTicketsResponse {
+    repeated Ticket ticket = 1;
+}
+message CreatePostResponse {
+    Post post = 1;
+}
+
+message GetTicketResponse {
+    Ticket ticket = 1;
+}
+
+message CreateTicketRequest {
+    int32 customerId = 1;
+    Ticket ticket = 2;
+}
+
+message CreateTicketResponse {
+    Ticket ticket = 1;
+}
