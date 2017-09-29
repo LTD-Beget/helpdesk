@@ -1,0 +1,227 @@
+syntax = 'proto3';
+
+package beget.api.helpdesk.ticket;
+import "google/api/annotations.proto";
+
+// TicketService
+service TicketService {
+    rpc createTicket (CreateTicketRequest) returns (CreateTicketResponse) {
+        option (google.api.http) = {
+            post: '/ticket/'
+            body: '*'
+        };
+    }
+
+    rpc getTicket (GetTicketRequest) returns (GetTicketResponse) {
+        option (google.api.http) = {
+            get: '/ticket/{id}'
+        };
+    }
+
+    rpc removeTicket (RemoveTicketRequest) returns (RemoveTicketResponse) {
+        option (google.api.http) = {
+            delete: '/ticket/{id}'
+        };
+    }
+
+    rpc createPost (CreatePostRequest) returns (CreatePostResponse) {
+        option (google.api.http) = {
+            post: '/ticket/{ticket_id}/post/'
+            body: '*'
+        };
+    }
+
+    rpc getTickets (GetTicketsRequest) returns (GetTicketsResponse) {
+        option (google.api.http) = {
+            get: '/ticket/'
+        };
+    }
+
+    rpc removeAttachment (RemoveAttachmentRequest) returns (RemoveAttachmentResponse) {
+        option (google.api.http) = {
+            delete: '/ticket/{ticket_id}/attachment/{attachment_id}'
+        };
+    }
+}
+
+message CreatePostRequest {
+    int32 ticket_id = 1;
+    string text = 2;
+    repeated string attachment_path = 3;
+}
+
+message CreatePostResponse {
+
+    oneof result {
+        Success success = 1;
+        Error error = 2;
+    }
+
+    message Success {
+        Post post = 1;
+    }
+
+    message Error {
+        Error error = 1;
+        string message = 2;
+
+        enum Error {
+            INTERNAL_ERROR = 0;
+        }
+    }
+}
+
+message CreateTicketRequest {
+    string subject = 1;
+    string text = 2;
+    repeated string attachment_path = 3;
+}
+
+message CreateTicketResponse {
+
+    oneof result {
+        Success success = 1;
+        Error error = 2;
+    }
+
+    message Success {
+        Ticket ticket = 1;
+    }
+
+    message Error {
+        Error error = 1;
+        string message = 2;
+
+        enum Error {
+            INTERNAL_ERROR = 0;
+        }
+    }
+}
+
+message RemoveAttachmentRequest {
+    int32 ticket_id = 1;
+    int32 attachment_id = 1;
+}
+
+message RemoveAttachmentResponse {
+    oneof result {
+        Success success = 1;
+        Error error = 2;
+    }
+
+    message Success {
+        bool success = 1;
+    }
+
+    message Error {
+        Error error = 1;
+        string message = 2;
+
+        enum Error {
+            INTERNAL_ERROR = 0;
+        }
+    }
+}
+
+message GetTicketsRequest {
+}
+
+message GetTicketsResponse {
+    repeated Ticket ticket = 1;
+}
+
+message RemoveTicketRequest {
+    int32 id = 1;
+}
+
+message RemoveTicketResponse {
+    oneof result {
+        Success success = 1;
+        Error error = 2;
+    }
+
+    message Success {
+        bool success = 1;
+    }
+
+    message Error {
+        Error error = 1;
+        string message = 2;
+
+        enum Error {
+            INTERNAL_ERROR = 0;
+        }
+    }
+}
+
+
+message GetTicketRequest {
+    int32 id = 1;
+}
+
+message GetTicketResponse {
+    Ticket ticket = 1;
+
+}
+
+message Ticket {
+    int32 id = 1;
+    Queue queue = 3;
+    Status status = 4;
+    string subject = 5;
+    string updated_at = 6;
+    string created_at = 7;
+    repeated Post post = 8;
+
+    enum Status {
+        UNREAD = 0;
+        READ = 1;
+        WAIT = 2;
+    }
+
+    enum Queue {
+        SUPPORT = 0;
+        ADMIN = 1;
+        MANAGER = 2;
+        FINANCE = 3;
+    }
+
+}
+
+message Post {
+    oneof author {
+        SupportInfo support_info = 1;
+        CustomerInfo customer_info = 2;
+    }
+
+    string text = 3;
+    string created_at = 4;
+    repeated Attachment attachment = 5;
+
+    message SupportInfo {
+        string name = 1;
+        Department department = 2;
+
+        enum Department {
+            DIRECTOR = 0;
+            ADMIN = 1;
+            CODER = 2;
+            BOOKER = 3;
+            QUALITY = 4;
+            SUPPORT = 5;
+            MANAGER = 6;
+            TRANSLATOR = 7;
+        }
+    }
+
+    message CustomerInfo {
+        string name = 1;
+    }
+
+}
+
+message Attachment {
+    int32 id = 1;
+    string path = 2;
+    string name = 3;
+}
