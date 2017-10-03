@@ -7,39 +7,39 @@ import "google/api/annotations.proto";
 service TicketService {
     rpc createTicket (CreateTicketRequest) returns (CreateTicketResponse) {
         option (google.api.http) = {
-            post: '/ticket/'
+            post: '/v1/helpdesk/ticket/'
             body: '*'
         };
     }
 
     rpc getTicket (GetTicketRequest) returns (GetTicketResponse) {
         option (google.api.http) = {
-            get: '/ticket/{id}'
+            get: '/v1/helpdesk/ticket/{id}'
         };
     }
 
     rpc removeTicket (RemoveTicketRequest) returns (RemoveTicketResponse) {
         option (google.api.http) = {
-            delete: '/ticket/{id}'
+            delete: '/v1/helpdesk/ticket/{id}'
         };
     }
 
     rpc createPost (CreatePostRequest) returns (CreatePostResponse) {
         option (google.api.http) = {
-            post: '/ticket/{ticket_id}/post/'
+            post: '/v1/helpdesk/ticket/{ticket_id}/post/'
             body: '*'
         };
     }
 
     rpc getTickets (GetTicketsRequest) returns (GetTicketsResponse) {
         option (google.api.http) = {
-            get: '/ticket/'
+            get: '/v1/helpdesk/ticket/'
         };
     }
 
     rpc removeAttachment (RemoveAttachmentRequest) returns (RemoveAttachmentResponse) {
         option (google.api.http) = {
-            delete: '/ticket/{ticket_id}/attachment/{attachment_id}'
+            delete: '/v1/helpdesk/ticket/{ticket_id}/attachment/{attachment_id}'
         };
     }
 }
