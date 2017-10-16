@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package beget.api.helpdesk.ticket;
+package beget.helpdesk.v1.ticket;
 import "google/api/annotations.proto";
 
 service TicketService {
