@@ -36,6 +36,12 @@ service TicketService {
         };
     }
 
+    rpc getUnread (GetUnreadRequest) returns (GetUnreadResponse) {
+        option (google.api.http) = {
+            get: "/v1/helpdesk/ticket/unread"
+        };
+    }
+
     rpc removeAttachment (RemoveAttachmentRequest) returns (RemoveAttachmentResponse) {
         option (google.api.http) = {
             delete: "/v1/helpdesk/ticket/{ticket_id}/attachment/{attachment_id}"
@@ -124,6 +130,12 @@ message CreatePostResponse {
 message GetListRequest {}
 
 message GetListResponse {
+    repeated Ticket ticket = 1;
+}
+
+message GetUnreadRequest {}
+
+message GetUnreadResponse {
     repeated Ticket ticket = 1;
 }
 
