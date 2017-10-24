@@ -165,19 +165,20 @@ message RemoveAttachmentResponse {
 
 message Ticket {
     uint32 id = 1;
-    Queue queue = 3;
+    Department department = 2;
+    string queue = 3;
     Status status = 4;
     string subject = 5;
     string created_at = 6; // Format: YYYY-MM-DD H:i:s
     repeated Post post = 7;
+    bool is_read = 8;
 
     enum Status {
-        UNREAD = 0;
-        READ = 1;
-        WAIT = 2;
+        OPEN = 0;
+        FEEDBACK = 1;
     }
 
-    enum Queue {
+    enum Department {
         SUPPORT = 0;
         ADMIN = 1;
         MANAGER = 2;
