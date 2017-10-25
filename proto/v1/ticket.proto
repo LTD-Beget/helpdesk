@@ -86,7 +86,20 @@ message GetRequest {
 }
 
 message GetResponse {
-    Ticket ticket = 1;
+    oneof result {
+        Ticket ticket = 1;
+        Error error = 2;
+    }
+
+    message Error {
+        Code code = 1;
+        string message = 2;
+
+        enum Code {
+            INTERNAL_ERROR = 0;
+            TICKET_NOT_FOUND = 1;
+        }
+    }
 }
 
 message RemoveRequest {
@@ -107,6 +120,7 @@ message RemoveResponse {
 
         enum Code {
             INTERNAL_ERROR = 0;
+            TICKET_NOT_FOUND = 1;
         }
     }
 }
@@ -130,6 +144,7 @@ message CreatePostResponse {
         enum Code {
             INTERNAL_ERROR = 0;
             EMPTY_TEXT = 1;
+            TICKET_NOT_FOUND = 2;
         }
     }
 }
@@ -159,6 +174,7 @@ message RemoveAttachmentResponse {
 
         enum Code {
             INTERNAL_ERROR = 0;
+            ATTACHMENT_NOT_FOUND = 1;
         }
     }
 }
