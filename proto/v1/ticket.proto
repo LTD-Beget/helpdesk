@@ -214,6 +214,7 @@ message Post {
     string text = 3;
     string created_at = 4;
     repeated Attachment attachment = 5;
+    uint32 id = 6;
 
     message SupportInfo {
         string name = 1;
