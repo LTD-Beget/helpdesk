@@ -71,6 +71,7 @@ message CreateResponse {
             EMPTY_TEXT = 1;
             EMPTY_SUBJECT = 2;
             LONG_TEXT = 3;
+            TOO_MANY_CREATIONS = 4;
         }
     }
 }
