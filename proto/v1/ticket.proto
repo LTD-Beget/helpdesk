@@ -216,6 +216,7 @@ message Post {
     string created_at = 4;
     repeated Attachment attachment = 5;
     uint32 id = 6;
+    bool markdown = 7;
 
     message SupportInfo {
         string name = 1;
