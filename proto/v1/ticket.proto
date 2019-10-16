@@ -191,8 +191,8 @@ message Ticket {
     string created_at = 6; // Format: YYYY-MM-DD H:i:s
     repeated Post post = 7;
     bool is_read = 8;
-    SupportInfo assigned = 9;
-    string queued_at = 10; // Format: YYYY-MM-DD H:i:s
+    string assignee_name = 9;
+    string department_update_at = 10; // Format: YYYY-MM-DD H:i:s
 
     enum Status {
         OPEN = 0;
@@ -224,25 +224,25 @@ message Post {
         string name = 1;
     }
 
+    message SupportInfo {
+        string name = 1;
+        Position position = 2;
+
+        enum Position {
+            DIRECTOR = 0;
+            ADMIN = 1;
+            CODER = 2;
+            BOOKER = 3;
+            QUALITY = 4;
+            SUPPORT = 5;
+            MANAGER = 6;
+            TRANSLATOR = 7;
+        }
+    }
+
     message Attachment {
         uint32 id = 1;
         string path = 2;
         string name = 3;
-    }
-}
-
-message SupportInfo {
-    string name = 1;
-    Department department = 2;
-
-    enum Department {
-        DIRECTOR = 0;
-        ADMIN = 1;
-        CODER = 2;
-        BOOKER = 3;
-        QUALITY = 4;
-        SUPPORT = 5;
-        MANAGER = 6;
-        TRANSLATOR = 7;
     }
 }
