@@ -220,10 +220,6 @@ message Post {
     uint32 id = 6;
     bool markdown = 7;
 
-    message CustomerInfo {
-        string name = 1;
-    }
-
     message SupportInfo {
         string name = 1;
         Position position = 2;
@@ -238,6 +234,10 @@ message Post {
             MANAGER = 6;
             TRANSLATOR = 7;
         }
+    }
+
+    message CustomerInfo {
+        string name = 1;
     }
 
     message Attachment {
