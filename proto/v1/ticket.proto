@@ -192,7 +192,7 @@ message Ticket {
     repeated Post post = 7;
     bool is_read = 8;
     string assignee_name = 9;
-    string department_update_at = 10; // Format: YYYY-MM-DD H:i:s
+    string department_updated_at = 10; // Format: YYYY-MM-DD H:i:s
 
     enum Status {
         OPEN = 0;
