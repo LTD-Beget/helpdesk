@@ -53,6 +53,34 @@ message CreateRequest {
     string subject = 1;
     string text = 2;
     repeated string attachment_path = 3;
+
+    QuestionInfo question_info = 4;
+
+    message QuestionInfo {
+        oneof motive {
+            Other other = 1;
+            Tech tech = 2;
+            Financial financial = 3;
+        }
+
+        message Other {
+
+        }
+
+        message Tech {
+            Option option = 1;
+
+            enum Option {
+                OTHER = 0;
+                SITE_NOT_WORKING = 1;
+            }
+        }
+
+        message Financial {
+
+        }
+
+    }
 }
 
 message CreateResponse {
