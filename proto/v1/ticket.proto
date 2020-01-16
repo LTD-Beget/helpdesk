@@ -68,7 +68,7 @@ message CreateRequest {
         }
 
         message Tech {
-            Option option = 1;
+            repeated Option option = 1;
 
             enum Option {
                 OTHER = 0;
