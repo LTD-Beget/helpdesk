@@ -53,6 +53,13 @@ message CreateRequest {
     string subject = 1;
     string text = 2;
     repeated string attachment_path = 3;
+
+    Type type = 4;
+
+    enum Type {
+        TECH = 0;
+        FINANCIAL = 1;
+    }
 }
 
 message CreateResponse {
