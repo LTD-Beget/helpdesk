@@ -80,7 +80,6 @@ message CreateRequest {
         message Financial {
 
         }
-
     }
 }
 
