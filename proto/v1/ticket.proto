@@ -54,11 +54,31 @@ message CreateRequest {
     string text = 2;
     repeated string attachment_path = 3;
 
-    Type type = 4;
+    QuestionInfo question_info = 4;
 
-    enum Type {
-        TECH = 0;
-        FINANCIAL = 1;
+    message QuestionInfo {
+        oneof motive {
+            Other other = 1;
+            Tech tech = 2;
+            Financial financial = 3;
+        }
+
+        message Other {
+
+        }
+
+        message Tech {
+            Option option = 1;
+
+            enum Option {
+                OTHER = 0;
+                SITE_NOT_WORKING = 1;
+            }
+        }
+
+        message Financial {
+
+        }
     }
 }
 
