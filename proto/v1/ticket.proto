@@ -71,9 +71,8 @@ message CreateRequest {
             Option option = 1;
 
             enum Option {
-                NONE = 0; // если значение не передано
-                OTHER = 1;
-                SITE_NOT_WORKING = 2;
+                OTHER = 0;
+                SITE_NOT_WORKING = 1;
             }
         }
 
