@@ -104,6 +104,7 @@ message CreateResponse {
             EMPTY_SUBJECT = 2;
             LONG_TEXT = 3;
             TOO_MANY_CREATIONS = 4;
+            EMPTY_QUESTION_INFO = 5;
         }
     }
 }
