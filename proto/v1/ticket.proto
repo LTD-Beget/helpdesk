@@ -266,6 +266,7 @@ message Post {
             SUPPORT = 5;
             MANAGER = 6;
             TRANSLATOR = 7;
+            EDUCATION = 8;
         }
     }
 
