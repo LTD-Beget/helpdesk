@@ -1,0 +1,170 @@
+syntax = "proto3";
+
+package beget.helpdesk.v1.feedback;
+import "google/api/annotations.proto";
+
+service FeedbackService {
+  rpc create (CreateRequest) returns (CreateResponse) {
+    option (google.api.http) = {
+      post: "/v1/helpdesk/post/{post_id}/feedback"
+      body: "*"
+    };
+  }
+
+  rpc update (UpdateRequest) returns (UpdateResponse) {
+    option (google.api.http) = {
+      put: "/v1/helpdesk/post/feedback/{feedback_id}"
+      body: "*"
+    };
+  }
+
+  rpc setCategory (SetCategoryRequest) returns (SetCategoryResponse) {
+    option (google.api.http) = {
+      post: "/v1/helpdesk/post/feedback/{feedback_id}/category"
+      body: "*"
+    };
+  }
+
+  rpc unsetCategory (UnsetCategoryRequest) returns (UnsetCategoryResponse) {
+    option (google.api.http) = {
+      delete: "/v1/helpdesk/post/feedback/category/{category_id}"
+    };
+  }
+}
+
+message Feedback {
+  uint64 id = 1;
+  FeedbackType type = 2;
+  uint64 post_id = 3;
+  repeated FeedbackCategory category = 4;
+}
+
+enum FeedbackType {
+  LIKE = 0;
+  RM_LIKE = 1;
+}
+
+enum FeedbackCategoryName {
+  QUICK_ANSWER = 0;
+  PROFESSIONAL_HELP = 1;
+  TASK_SOLVED = 2;
+  DETAILED_ANSWER = 3;
+  EDUCATIONAL_ANSWER = 4;
+  NICE_TALKING = 5;
+}
+
+message FeedbackCategory {
+  uint64 id = 1;
+  uint64 feedback_id = 2;
+  FeedbackCategoryName name = 3;
+  State state = 4;
+  enum State {
+    ACTIVE = 0;
+    NOT_ACTIVE = 1;
+  }
+}
+
+message CreateRequest {
+  uint64 post_id = 1;
+  Type type = 2;
+  enum Type {
+    LIKE = 0; // возможно потом появится dislike
+  }
+}
+
+message CreateResponse {
+  oneof result {
+    Success success = 1;
+    Error error = 2;
+  }
+
+  message Success {
+    Feedback feedback = 1;
+  }
+
+  message Error {
+    Code code = 1;
+    string message = 2;
+
+    enum Code {
+      INTERNAL_ERROR = 0;
+      POST_NOT_FOUND = 1;
+      INVALID_PARAMS = 2;
+    }
+  }
+}
+
+message UpdateRequest {
+  uint64 feedback_id = 1;
+  FeedbackType type = 2;
+}
+
+message UpdateResponse {
+  oneof result {
+    Success success = 1;
+    Error error = 2;
+  }
+
+  message Success {}
+
+  message Error {
+    Code code = 1;
+    string message = 2;
+
+    enum Code {
+      INTERNAL_ERROR = 0;
+      FEEDBACK_NOT_FOUND = 1;
+      INVALID_PARAMS = 2;
+    }
+  }
+}
+
+message SetCategoryRequest {
+  uint64 feedback_id = 1;
+  FeedbackCategoryName category = 2;
+}
+
+message SetCategoryResponse {
+  oneof result {
+    Success success = 1;
+    Error error = 2;
+  }
+
+  message Success {
+    FeedbackCategory feedbackCategory = 1;
+  }
+
+  message Error {
+    Code code = 1;
+    string message = 2;
+
+    enum Code {
+      INTERNAL_ERROR = 0;
+      FEEDBACK_NOT_FOUND = 1;
+      INVALID_PARAMS = 2;
+    }
+  }
+}
+
+message UnsetCategoryRequest {
+  uint64 category_id = 1;
+}
+
+message UnsetCategoryResponse {
+  oneof result {
+    Success success = 1;
+    Error error = 2;
+  }
+
+  message Success {}
+
+  message Error {
+    Code code = 1;
+    string message = 2;
+
+    enum Code {
+      INTERNAL_ERROR = 0;
+      CATEGORY_NOT_FOUND = 1;
+    }
+  }
+}
