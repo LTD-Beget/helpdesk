@@ -1,0 +1,157 @@
+syntax = "proto3";
+
+package beget.helpdesk.v1.ticket;
+import "google/api/annotations.proto";
+
+service FeedbackService {
+  rpc likePost (LikePostRequest) returns (LikePostResponse) {
+    option (google.api.http) = {
+      post: "/v1/helpdesk/post/{post_id}/like"
+      body: "*"
+    };
+  }
+
+  rpc removeLike (RemoveLikeRequest) returns (RemoveLikeResponse) {
+    option (google.api.http) = {
+      delete: "/v1/helpdesk/post/like/{like_id}"
+    };
+  }
+
+  rpc bindCategoryToLike (BindCategoryToLikeRequest) returns (BindCategoryToLikeResponse) {
+    option (google.api.http) = {
+      post: "/v1/helpdesk/post/like/{like_id}"
+      body: "*"
+    };
+  }
+
+  rpc unbindCategoryFromLike (UnbindCategoryFromLikeRequest) returns (UnbindCategoryFromLikeResponse) {
+    option (google.api.http) = {
+      delete: "/v1/helpdesk/post/like/category/{category_id}"
+    };
+  }
+}
+
+message Feedback {
+  uint64 id = 1;
+  FeedbackAction action = 2;
+  uint64 post_id = 3;
+}
+
+enum FeedbackAction {
+  LIKE = 0;
+  RM_LIKE = 1;
+}
+
+enum FeedbackCategoryName {
+  QUICK_ANSWER = 0;
+  PROFESSIONAL_HELP = 1;
+  TASK_SOLVED = 2;
+  DETAILED_ANSWER = 3;
+  EDUCATIONAL_ANSWER = 4;
+  NICE_TALKING = 5;
+}
+
+message FeedbackCategory {
+  uint64 id = 1;
+  uint64 feedback_id = 2;
+  FeedbackCategoryName name = 3;
+  FeedbackAction action = 4;
+}
+
+message LikePostRequest {
+  uint64 post_id = 1;
+}
+
+message LikePostResponse {
+  oneof result {
+    Success success = 1;
+    Error error = 2;
+  }
+
+  message Success {
+    Feedback feedback = 1;
+  }
+
+  message Error {
+    Code code = 1;
+    string message = 2;
+
+    enum Code {
+      INTERNAL_ERROR = 0;
+      POST_NOT_FOUND = 1;
+    }
+  }
+}
+
+message RemoveLikeRequest {
+  uint64 like_id = 1;
+}
+
+message RemoveLikeResponse {
+  oneof result {
+    Success success = 1;
+    Error error = 2;
+  }
+
+  message Success {}
+
+  message Error {
+    Code code = 1;
+    string message = 2;
+
+    enum Code {
+      INTERNAL_ERROR = 0;
+      LIKE_NOT_FOUND = 1;
+    }
+  }
+}
+
+message BindCategoryToLikeRequest {
+  uint64 like_id = 1;
+  FeedbackCategoryName category = 2;
+
+}
+
+message BindCategoryToLikeResponse {
+  oneof result {
+    Success success = 1;
+    Error error = 2;
+  }
+
+  message Success {
+    FeedbackCategory feedbackCategory = 1;
+  }
+
+  message Error {
+    Code code = 1;
+    string message = 2;
+
+    enum Code {
+      INTERNAL_ERROR = 0;
+      LIKE_NOT_FOUND = 1;
+    }
+  }
+}
+
+message UnbindCategoryFromLikeRequest {
+  uint64 category_id = 1;
+}
+
+message UnbindCategoryFromLikeResponse {
+  oneof result {
+    Success success = 1;
+    Error error = 2;
+  }
+
+  message Success {}
+
+  message Error {
+    Code code = 1;
+    string message = 2;
+
+    enum Code {
+      INTERNAL_ERROR = 0;
+      CATEGORY_NOT_FOUND = 1;
+    }
+  }
+}
