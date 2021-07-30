@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package beget.helpdesk.v1.ticket;
 import "google/api/annotations.proto";
-import "helpdesk/proto/v1/feedback.proto";
+import "helpdesk/proto/v1/reaction.proto";
 
 
 service TicketService {
@@ -254,7 +254,7 @@ message Post {
     repeated Attachment attachment = 5;
     uint32 id = 6;
     bool markdown = 7;
-    feedback.Feedback feedback = 8;
+    reaction.Reaction reaction = 8;
     message SupportInfo {
         string name = 1;
         Position position = 2;
