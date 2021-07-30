@@ -69,6 +69,7 @@ message UnsetResponse {
 
     enum Code {
       INTERNAL_ERROR = 0;
+      POST_NOT_FOUND = 1;
     }
   }
 }
