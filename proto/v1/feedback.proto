@@ -20,7 +20,7 @@ service FeedbackService {
 }
 
 message Feedback {
-  uint64 post_id = 1;
+  uint32 post_id = 1;
   FeedbackType type = 2;
   repeated string chosen_category = 3;
 }
