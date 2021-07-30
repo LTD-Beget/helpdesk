@@ -45,7 +45,8 @@ message SetResponse {
 
     enum Code {
       INTERNAL_ERROR = 0;
-      UNKNOWN_CATEGORY = 1;
+      POST_NOT_FOUND = 1;
+      UNKNOWN_CATEGORY = 2;
     }
   }
 }
@@ -55,4 +56,19 @@ message UnsetRequest {
 }
 
 message UnsetResponse {
+  oneof result {
+    Success success = 1;
+    Error error = 2;
+  }
+
+  message Success {}
+
+  message Error {
+    Code code = 1;
+    string message = 2;
+
+    enum Code {
+      INTERNAL_ERROR = 0;
+    }
+  }
 }
