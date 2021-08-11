@@ -6,7 +6,7 @@ import "google/api/annotations.proto";
 service ReactionService {
   rpc set (SetRequest) returns (SetResponse) {
     option (google.api.http) = {
-      put: "/v1/helpdesk/post/{post_id}/reaction"
+      put: "/v1/helpdesk/post/{reaction.post_id}/reaction"
       body: "*"
     };
   }
