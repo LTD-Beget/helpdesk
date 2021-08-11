@@ -14,7 +14,6 @@ service ReactionService {
   rpc unset (UnsetRequest) returns (UnsetResponse) {
     option (google.api.http) = {
       delete: "/v1/helpdesk/post/{post_id}/reaction"
-      body: "*"
     };
   }
 }
