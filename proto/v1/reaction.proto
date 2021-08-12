@@ -46,6 +46,7 @@ message SetResponse {
       INTERNAL_ERROR = 0;
       POST_NOT_FOUND = 1;
       UNKNOWN_CATEGORY = 2;
+      UNKNOWN_TYPE = 3;
     }
   }
 }
