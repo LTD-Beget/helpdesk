@@ -6,7 +6,7 @@ import "google/api/annotations.proto";
 service ReactionService {
   rpc set (SetRequest) returns (SetResponse) {
     option (google.api.http) = {
-      put: "/v1/helpdesk/post/{reaction.post_id}/reaction"
+      put: "/v1/helpdesk/post/{post_id}/reaction"
       body: "*"
     };
   }
@@ -29,7 +29,9 @@ enum ReactionType {
 }
 
 message SetRequest {
-  Reaction reaction = 1;
+  uint32 post_id = 1;
+  ReactionType type = 2;
+  repeated string chosen_category = 3;
 }
 
 message SetResponse {
