@@ -269,6 +269,7 @@ message Post {
             MANAGER = 6;
             TRANSLATOR = 7;
             EDUCATION = 8;
+            MARKETING = 9;
         }
     }
 
