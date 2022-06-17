@@ -270,6 +270,7 @@ message Post {
             TRANSLATOR = 7;
             EDUCATION = 8;
             MARKETING = 9;
+            LEGAL = 10;
         }
     }
 
